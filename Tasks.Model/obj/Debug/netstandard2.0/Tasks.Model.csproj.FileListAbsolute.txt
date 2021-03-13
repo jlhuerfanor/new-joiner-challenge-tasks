@@ -1,8 +1,0 @@
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/bin/Debug/netstandard2.0/Tasks.Model.deps.json
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/bin/Debug/netstandard2.0/Tasks.Model.dll
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/bin/Debug/netstandard2.0/Tasks.Model.pdb
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/obj/Debug/netstandard2.0/Tasks.Model.csprojAssemblyReference.cache
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/obj/Debug/netstandard2.0/Tasks.Model.AssemblyInfoInputs.cache
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/obj/Debug/netstandard2.0/Tasks.Model.AssemblyInfo.cs
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/obj/Debug/netstandard2.0/Tasks.Model.dll
-/home/leonardo/git/local/new-joiner-challenge/modules/tasks/Tasks.Model/obj/Debug/netstandard2.0/Tasks.Model.pdb
