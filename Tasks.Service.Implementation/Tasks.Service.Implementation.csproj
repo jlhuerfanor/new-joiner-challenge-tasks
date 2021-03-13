@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tasks.Model\Tasks.Model.csproj" />
+    <ProjectReference Include="..\Tasks.Model.Client\Tasks.Model.Client.csproj" />
+    <ProjectReference Include="..\Tasks.Service.Api\Tasks.Service.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
