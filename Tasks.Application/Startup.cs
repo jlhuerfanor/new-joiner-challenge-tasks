@@ -28,6 +28,7 @@ namespace Tasks.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureMapper();
+            services.ConfigurePersistence(Configuration);
             services.ConfigureApplicationServices();
             services.ConfigureApplicationBusiness();
             services.AddMvc()
