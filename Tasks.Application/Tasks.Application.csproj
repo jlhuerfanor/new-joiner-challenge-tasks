@@ -1,5 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <ItemGroup>
     <ProjectReference Include="..\Tasks.Model\Tasks.Model.csproj" />
     <ProjectReference Include="..\Tasks.Model.Client\Tasks.Model.Client.csproj" />
@@ -8,14 +8,13 @@
     <ProjectReference Include="..\Tasks.Business\Tasks.Business.csproj" />
     <ProjectReference Include="..\Tasks.Web.ApiController\Tasks.Web.ApiController.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
   </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>11165543-8425-4b09-925f-8e12d6f8b8f4</UserSecretsId>
   </PropertyGroup>
-
-
 </Project>
