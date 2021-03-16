@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tasks.Model.Domain;
 using Tasks.Service.Persistence;
 
@@ -10,6 +11,11 @@ namespace Tasks.Service.Tasks
         public EFTaskQueryService(TaskDbContext context)
         {
             this.context = context;
+        }
+
+        public IEnumerable<Task> GetAllTasks()
+        {
+            return context.Tasks;
         }
 
         public Task GetById(int id)

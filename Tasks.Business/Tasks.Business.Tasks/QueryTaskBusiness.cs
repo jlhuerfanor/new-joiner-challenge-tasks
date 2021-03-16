@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using Tasks.Model.Domain;
 using Tasks.Service.Tasks;
 
@@ -16,6 +18,13 @@ namespace Tasks.Business.Tasks
         public Task GetById(int taskId)
         {
             return taskQueryService.GetById(taskId);
+        }
+
+        public IList<int> GetTaskIds()
+        {
+            return taskQueryService.GetAllTasks()
+                .Select(task => task.Id)
+                .ToList();
         }
     }
 }
