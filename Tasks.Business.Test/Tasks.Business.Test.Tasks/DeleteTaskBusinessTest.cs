@@ -1,11 +1,12 @@
+using System;
 using Tasks.Business.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Tasks.Service.Tasks;
 using Tasks.Service.Joiner;
-using Moq;
 using Tasks.Service.Persistence;
 using Tasks.Model.Domain;
-using System;
+
 
 namespace Tasks.Business.Test.Tasks
 {

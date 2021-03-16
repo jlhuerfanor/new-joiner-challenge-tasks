@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tasks.Model.Client;
 using Tasks.Model.Domain;
 using Tasks.Business.Tasks;
+using System.Collections.Generic;
 
 namespace Tasks.Web.Controller {
 
@@ -64,6 +65,10 @@ namespace Tasks.Web.Controller {
             var task = queryTaskBusiness.GetById(taskIdInt);
 
             return mapper.Map<TaskDto>(task);
+        }
+        [HttpGet]
+        public IList<int> GetTaskIds() {
+            return queryTaskBusiness.GetTaskIds();
         }
     }
 
