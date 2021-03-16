@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<GetStatusBusiness>();
             services.AddScoped<CreateTaskBusiness>();
             services.AddScoped<UpdateTaskBusiness>();
+            services.AddScoped<DeleteTaskBusiness>();
             return services;
         }
     }
