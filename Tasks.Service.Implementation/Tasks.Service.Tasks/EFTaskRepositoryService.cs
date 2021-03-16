@@ -13,6 +13,11 @@ namespace Tasks.Service.Tasks
             this.context = context;
         }
 
+        public void Delete(Task task)
+        {
+            this.context.Remove(task);
+        }
+
         public Task Persist(Task task)
         {
             return context.Add<Task>(task).Entity;
