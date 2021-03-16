@@ -26,14 +26,14 @@ namespace Tasks.Service.Conversion
                 result = new Task();
             }
 
-            result.Name = source.Name;
-            result.Description = source.Description;
-            result.Completed = source.Completed;
-            result.EstimatedRequiredHours = source.EstimatedRequiredHours;
-            result.Stack = source.Stack;
-            result.MinimumRoles = source.MinimumRoles != null ? new List<string>(source.MinimumRoles) : null;
-            result.AssignedIdNumber = source.AssignedIdNumber;
-            result.ParentTask = source.ParentTaskId.HasValue? queryService.GetById(source.ParentTaskId.Value) : null;
+            result.Name = source.Name != null ? source.Name : result.Name;
+            result.Description = source.Description != null ? source.Description : result.Description;
+            result.Completed = source.Completed.HasValue ?  source.Completed.Value : result.Completed;
+            result.EstimatedRequiredHours = source.EstimatedRequiredHours.HasValue ? source.EstimatedRequiredHours.Value : result.EstimatedRequiredHours;
+            result.Stack = source.Stack != null ? source.Stack : result.Stack;
+            result.MinimumRoles = source.MinimumRoles != null ? new List<string>(source.MinimumRoles) : result.MinimumRoles;
+            result.AssignedIdNumber = source.AssignedIdNumber.HasValue ? source.AssignedIdNumber.Value : result.AssignedIdNumber;
+            result.ParentTask = source.ParentTaskId.HasValue? queryService.GetById(source.ParentTaskId.Value) : result.ParentTask;
 
             return result;
         }

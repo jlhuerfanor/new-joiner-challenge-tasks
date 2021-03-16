@@ -10,29 +10,26 @@ using System;
 namespace Tasks.Business.Test.Tasks
 {
     [TestClass]
-    public class CreateTaskBusinessTest
+    public class UpdateTaskBusinessTest
     {
-        private Mock<ITaskRepositoryService> repositoryServiceMock;
         private Mock<IJoinerQueryService> joinerQueryServiceMock;
         private Mock<ITransactionalService> transactionalServiceMock;
-        private CreateTaskBusiness createTaskBusiness;
+        private UpdateTaskBusiness updateTaskBusiness;
 
         private Task taskToCreate;
         private Task createdTask;
         private JoinerProfile joinerProfile;
+        private bool changesCommited;
 
         [TestInitialize]
         public void setupTest() {
-            repositoryServiceMock = new Mock<ITaskRepositoryService>();
             joinerQueryServiceMock = new Mock<IJoinerQueryService>();
             transactionalServiceMock = new Mock<ITransactionalService>();
 
-            transactionalServiceMock.Setup((mock) => mock.Commit()).Callback(() => {  });
-            repositoryServiceMock.Setup((mock) => mock.Persist(It.IsAny<Task>())).Returns((Task value) => value);
+            transactionalServiceMock.Setup((mock) => mock.Commit()).Callback(() => { this.changesCommited = true; });
             joinerQueryServiceMock.Setup((mock) => mock.GetProfile(It.IsAny<long>())).Returns((long value) => this.GetJoinerProfile(value));
 
-            createTaskBusiness = new CreateTaskBusiness(
-                repositoryServiceMock.Object,
+            updateTaskBusiness = new UpdateTaskBusiness(
                 joinerQueryServiceMock.Object,
                 transactionalServiceMock.Object);
         }
@@ -43,47 +40,62 @@ namespace Tasks.Business.Test.Tasks
         }
 
         [TestMethod]
-        public void CreateTaskFail_NameValidation() {
+        public void UpdateTaskFail_TaskIdValidation() {
+            GivenATaskWithInvalidId();
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
+        }
+
+        [TestMethod]
+        public void UpdateTaskFail_NameValidation() {
             GivenATaskWithNullName();
-            Assert.ThrowsException<ValidationException>(() => WhenTaskGetsCreated());
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
         }
 
         [TestMethod]
-        public void CreateTaskFail_EstimatedTimeValidation() {
+        public void UpdateTaskFail_EstimatedTimeValidation() {
             GivenATaskWithEstimatedRequiredHoursLessThanZero();
-            Assert.ThrowsException<ValidationException>(() => WhenTaskGetsCreated());
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
         }
 
         [TestMethod]
-        public void CreateTaskFail_StackValidation() {
+        public void UpdateTaskFail_StackValidation() {
             GivenATaskWithNullStack();
-            Assert.ThrowsException<ValidationException>(() => WhenTaskGetsCreated());
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
         }
 
         [TestMethod]
-        public void CreateTaskFail_AsigneeIdNumberValueValidation() {
+        public void UpdateTaskFail_AsigneeIdNumberValueValidation() {
             GivenATaskWithAsigneeIdNumberLessThanZero();
-            Assert.ThrowsException<ValidationException>(() => WhenTaskGetsCreated());
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
         }
 
         [TestMethod]
-        public void CreateTaskFail_AsigneeValidation() {
+        public void UpdateTaskFail_AsigneeValidation() {
             GivenATaskAsignedToANonExistingJoiner();
-            Assert.ThrowsException<ValidationException>(() => WhenTaskGetsCreated());
+            Assert.ThrowsException<ValidationException>(() => WhenTaskIsUpdated());
         }
 
         [TestMethod]
-        public void CreateTaskSuccess() {
+        public void UpdateTaskSuccess() {
             GivenAFullyDefinedTask();
             GivenAnExistingJoiner();
-            WhenTaskGetsCreated();
+            WhenTaskIsUpdated();
             ThenATaskGetsPersisted();
+        }
+
+        private void GivenATaskWithInvalidId()
+        {
+            this.taskToCreate = new Task() {
+                Name = "Task",
+                EstimatedRequiredHours = 5,
+                Stack = "Stack",
+                AssignedIdNumber = 14
+            };
         }
 
         private void ThenATaskGetsPersisted()
         {
-            Assert.IsNotNull(this.createdTask);
-            Assert.AreEqual(this.taskToCreate, this.createdTask);
+            Assert.IsTrue(this.changesCommited);
         }
 
         private void GivenAnExistingJoiner()
@@ -94,6 +106,7 @@ namespace Tasks.Business.Test.Tasks
         private void GivenAFullyDefinedTask()
         {
             this.taskToCreate = new Task() {
+                Id = 1,
                 Name = "Task",
                 EstimatedRequiredHours = 5,
                 Stack = "Stack",
@@ -104,6 +117,7 @@ namespace Tasks.Business.Test.Tasks
         private void GivenATaskAsignedToANonExistingJoiner()
         {
             this.taskToCreate = new Task() {
+                Id = 1,
                 Name = "Task",
                 EstimatedRequiredHours = 5,
                 Stack = "Stack",
@@ -114,6 +128,7 @@ namespace Tasks.Business.Test.Tasks
         private void GivenATaskWithAsigneeIdNumberLessThanZero()
         {
             this.taskToCreate = new Task() {
+                Id = 1,
                 Name = "Task",
                 EstimatedRequiredHours = 5,
                 Stack = "Stack",
@@ -124,6 +139,7 @@ namespace Tasks.Business.Test.Tasks
         private void GivenATaskWithNullStack()
         {
             this.taskToCreate = new Task() {
+                Id = 1,
                 Name = "Task",
                 EstimatedRequiredHours = 5
             };
@@ -132,6 +148,7 @@ namespace Tasks.Business.Test.Tasks
         private void GivenATaskWithEstimatedRequiredHoursLessThanZero()
         {
             this.taskToCreate = new Task() {
+                Id = 1,
                 Name = "Task",
                 EstimatedRequiredHours = -1
             };
@@ -140,12 +157,13 @@ namespace Tasks.Business.Test.Tasks
         private void GivenATaskWithNullName()
         {
             this.taskToCreate = new Task() {
+                Id = 1
             };
         }
 
-        private void WhenTaskGetsCreated()
+        private void WhenTaskIsUpdated()
         {
-            this.createdTask = this.createTaskBusiness.Create(this.taskToCreate);
+            this.createdTask = this.updateTaskBusiness.Update(this.taskToCreate);
         }
     }
 }
