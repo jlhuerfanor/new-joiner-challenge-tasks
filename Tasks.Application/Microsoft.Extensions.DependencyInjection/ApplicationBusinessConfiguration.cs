@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<CreateTaskBusiness>();
             services.AddScoped<UpdateTaskBusiness>();
             services.AddScoped<DeleteTaskBusiness>();
+            services.AddScoped<QueryTaskBusiness>();
             return services;
         }
     }
