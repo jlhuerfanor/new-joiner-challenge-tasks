@@ -12,8 +12,9 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection ConfigureMapper(this IServiceCollection services) {
 
-            services.AddSingleton<MapperConfiguration>(MapperConfigurationExtension.CreateConfiguration);
-            services.AddSingleton<Mapper>(MapperConfigurationExtension.CreateMapper);
+            services.AddScoped<MapperConfiguration>(MapperConfigurationExtension.CreateConfiguration);
+            services.AddScoped<Mapper>(MapperConfigurationExtension.CreateMapper);
+            services.AddScoped<TaskDtoToTaskConverter>();
 
             return services;
         }
@@ -27,6 +28,8 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ServiceStatus, ServiceStatusDto>().ConvertUsing<ServiceStatusToServiceStatusDtoConverter>();
+                cfg.CreateMap<TaskDto, Task>().ConvertUsing(serviceProvider.GetService<TaskDtoToTaskConverter>());
+                cfg.CreateMap<Task, TaskDto>().ConvertUsing(serviceProvider.GetService<TaskDtoToTaskConverter>());
             });
 
             return mapperConfiguration;
