@@ -9,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection ConfigureApplicationBusiness(this IServiceCollection services) {
             services.AddSingleton<GetStatusBusiness>();
             services.AddScoped<CreateTaskBusiness>();
+            services.AddScoped<UpdateTaskBusiness>();
             return services;
         }
     }
