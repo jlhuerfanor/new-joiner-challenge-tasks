@@ -18,8 +18,8 @@ namespace Microsoft.Extensions.DependencyInjection {
         public static IServiceCollection ConfigurePersistence(this IServiceCollection services,  IConfiguration configuration) {
             var connectionString = configuration.GetConnectionString(ConnectionStringName);
 
-            services.AddDbContext<DbContext, DefaultTaskDbContext>(options => options.UseNpgsql(connectionString));
-            Console.WriteLine("Set up persistence provider.");
+            services.AddDbContext<TaskDbContext, DefaultTaskDbContext>(options => options.UseNpgsql(connectionString));
+            Console.WriteLine("Set up persistence provider. {0}", connectionString);
 
             return services;
         }

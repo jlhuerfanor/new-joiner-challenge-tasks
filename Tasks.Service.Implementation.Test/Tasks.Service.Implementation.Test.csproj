@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tasks.Service.Implementation\Tasks.Service.Implementation.csproj" />
+    <ProjectReference Include="..\Tasks.Service.Api\Tasks.Service.Api.csproj" />
+    <ProjectReference Include="..\Tasks.Model\Tasks.Model.csproj" />
+    <ProjectReference Include="..\Tasks.Model.Client\Tasks.Model.Client.csproj" />
+  </ItemGroup>
+
+</Project>

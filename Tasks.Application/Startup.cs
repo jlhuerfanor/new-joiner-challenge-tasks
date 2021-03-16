@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Tasks.Web.Controller;
+using System.Text.Json;
 
 namespace Tasks.Application
 {
@@ -27,13 +28,14 @@ namespace Tasks.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureMapper();
             services.ConfigurePersistence(Configuration);
-            services.ConfigureApplicationServices();
+            services.ConfigureApplicationServices(Configuration);
             services.ConfigureApplicationBusiness();
             services.AddMvc()
+                    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase)
                     .AddApplicationPart(Assembly.GetAssembly(typeof(StatusController)))
                     .AddControllersAsServices();
+            services.ConfigureMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +46,7 @@ namespace Tasks.Application
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UsePathBase("/wap/tasks");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
