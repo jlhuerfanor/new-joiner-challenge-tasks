@@ -14,16 +14,19 @@ namespace Tasks.Web.Controller {
         private CreateTaskBusiness createTaskBusiness;
         private UpdateTaskBusiness updateTaskBusiness;
         private DeleteTaskBusiness deleteTaskBusiness;
+        private QueryTaskBusiness queryTaskBusiness;
 
         public TaskController(
             CreateTaskBusiness createTaskBusiness,
             UpdateTaskBusiness updateTaskBusiness,
             DeleteTaskBusiness deleteTaskBusiness,
+            QueryTaskBusiness queryTaskBusiness,
             Mapper mapper)
         {
             this.createTaskBusiness = createTaskBusiness;
             this.updateTaskBusiness = updateTaskBusiness;
             this.deleteTaskBusiness = deleteTaskBusiness;
+            this.queryTaskBusiness = queryTaskBusiness;
             this.mapper = mapper;
         }
 
@@ -53,6 +56,14 @@ namespace Tasks.Web.Controller {
             var taskIdInt = int.Parse(taskId);
 
             this.deleteTaskBusiness.Delete(taskIdInt);            
+        }
+        [HttpGet("{taskId}")]
+        [Consumes("application/json")]
+        public TaskDto GetTaskDetails(string taskId) {
+            var taskIdInt = int.Parse(taskId);
+            var task = queryTaskBusiness.GetById(taskIdInt);
+
+            return mapper.Map<TaskDto>(task);
         }
     }
 
